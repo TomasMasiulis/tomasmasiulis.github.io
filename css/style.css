@@ -418,6 +418,7 @@ margin-left: 4%;
 	text-indent: 100%;
 	background: url(../images/arrow_up.png) no-repeat center;
 }
+
 #toTop:active, #toTop:focus {
 	outline: none;
 }
@@ -433,8 +434,7 @@ margin-left: 4%;
 		width:90%;
 	}
 	.content-middle{
-		background-size:101%;
-		padding:4% 0;
+		background-size:100%;
 	}
 	
 	.title{ 
@@ -462,6 +462,9 @@ margin-left: 4%;
 	.content-middle h2{
 		font-size:2.5em;
 	}
+	.content-middle{
+		background-size:100%;
+	}
 	.content-middle p{
 		width:100%;
 	}
@@ -475,13 +478,12 @@ margin-left: 4%;
 		font-size:1.7em !important;
 	}
 	.iapps{
-	background-size: 70% 70% !important;
+	width: 70%;
 	}
 	.download-social a{
 		background-size: 85% 85% !important;
 		margin-right: 3px !important;
 	}
-
 
 }
 @media (max-width:800px){
@@ -516,6 +518,9 @@ margin-left: 4%;
 	.content-middle h2{
 		font-size:2em;
 	}
+	.content-middle{
+		background-size:100%;
+	}
 	.content-middle p{
 		font-size:18px;
 	}
@@ -541,7 +546,7 @@ margin-left: 4%;
 		font-size:1.5em !important;
 	}
 	.iapps{
-	background-size: 50% 50% !important;
+	width: 50%;
 	}
 	.download-social a{
 		background-size: 60% 60% !important;
@@ -573,7 +578,7 @@ margin-left: 4%;
 		font-size:16px;
 	}
 	.content-middle{
-		background-size:125%;
+		background-size:100%;
 	}
 	.testimonials p{
 		font-size:18px;
@@ -620,7 +625,7 @@ margin-left: 4%;
 		width:100%;
 	}
 	.content-middle{
-		background-size:135%;
+		background-size:100%;
 	}
 	.content-middle p{
 		font-weight:normal;
@@ -630,11 +635,19 @@ margin-left: 4%;
 		margin-left: 23% !important;
 	}
 	.iapps{
-	margin-left: 30% !important;
-	background-size: 70% 70% !important;
+		clear: both !important;
+		width: 150px !important;
+		margin-bottom: 20px !important;
+		padding-top: 20px !important;
 	}
 	.download-social-container {
-		width: 70% !important;
+		width: 150px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+	
+	.download-social {
+		clear: both !important;
 	}
 }
 @media (max-width:320px){
@@ -798,10 +811,7 @@ margin-left: 4%;
 
 .iapps{
 	float: left;
-	display: block;
-	width: 217px;
-	height: 74px;
-	background: url(../images/button.png) no-repeat;
+	width: 40%;
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
