@@ -456,7 +456,7 @@ margin-left: 4%;
 		width:60%;
 	}
 	.img-banner-info h3{
-		font-size:25px;
+		font-size:1.4em;
 		margin:20px 0;
 	}
 	.content-middle h2{
@@ -475,7 +475,7 @@ margin-left: 4%;
 		width:100%;
 	}
 	.title{ 
-		font-size:1.7em !important;
+		font-size:1em !important;
 	}
 	.iapps{
 	width: 70%;
@@ -501,7 +501,7 @@ margin-left: 4%;
 		font-size:1.8em;
 	}
 	.img-banner-info h3{
-		font-size:1.3em;
+		font-size:1.1em;
 	}
 	.features p{
 		width:100%;
@@ -570,9 +570,8 @@ margin-left: 4%;
 		width:65%;
 	}
 	.img-banner-info h3{
-		font-size:18px;
-		line-height:1.5em;
-		margin:10px 0;
+		font-size:0.8em;
+		margin-right: 20px;
 	}
 	.features p{
 		font-size:16px;
@@ -602,6 +601,11 @@ margin-left: 4%;
 		margin:0 auto;
 		width:40%;
 	}
+	
+	.img-banner-info h3{
+		font-size:1.2em;
+	}
+	
 	.cssmenu{
 		float:left;
 		text-align:center;
