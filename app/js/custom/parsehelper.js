@@ -62,6 +62,7 @@ function register() {
 
 function logIn() {
   var self = this;
+  self.$(".m-t .error").html("Invalid username or password. Please try again.").hide();
   var email = this.$("#login-username").val();
   var password = this.$("#login-password").val();
   
@@ -71,24 +72,29 @@ function logIn() {
       success: function(email) {
         
           // Do stuff
+          if (email.length > 0)
+          {
+            var user = email[0];
+            var username = user.get('username');
 
-          var user = email[0];
-          var username = user.get('username');
+            Parse.User.logIn(username, password, {
+                success: function(user) {
+                  
+                    //self.undelegateEvents();
+                    //delete self;
 
-          Parse.User.logIn(username, password, {
-              success: function(user) {
+                    window.location = "index.html"; // Redirecting to other page.
+                },
+                error: function(user, error) {
+                    self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
+                    //this.$(".login-form button").removeAttr("disabled");
+                }
                 
-                  //self.undelegateEvents();
-                  //delete self;
-
-                  window.location = "index.html"; // Redirecting to other page.
-              },
-              error: function(user, error) {
-                  self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
-                  //this.$(".login-form button").removeAttr("disabled");
-              }
-              
-          });
+            });
+          } else
+          {
+            self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
+          }
       },
       error: function(user, error) {
             self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
