@@ -40,7 +40,7 @@
                             <img alt="image" class="img-circle" src="img/profile_small.jpg" />
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold" id="usernameTitle"></strong>
                              </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="profile.html">Profile</a></li>
@@ -51,7 +51,7 @@
                             </ul>
                         </div>
                         <div class="logo-element">
-                            IN+
+                            d2b
                         </div>
                     </li>
                     <li class="active">
@@ -277,7 +277,7 @@
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
+                    <span class="m-r-sm text-muted welcome-message">Welcome to drop2books</span>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -377,7 +377,7 @@
 
 
                 <li>
-                    <a href="login.html">
+                    <a href="javascript:logout();">
                         <i class="fa fa-sign-out"></i> Log out
                     </a>
                 </li>
@@ -393,7 +393,7 @@
                 <div class="row  border-bottom white-bg dashboard-header">
 
                     <div class="col-sm-3">
-                        <h2>Welcome Amelia</h2>
+                        <h2><div id = "welcomeUser"></div></h2>
                         <small>You have 42 messages and 6 notifications.</small>
                         <ul class="list-group clear-list m-t">
                             <li class="list-group-item fist-item">
@@ -1289,6 +1289,10 @@
     <!-- Mainly scripts -->
     <script src="js/jquery-2.1.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+    <script src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <script src="js/custom/parsehelper.js"></script>
+
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
@@ -1326,6 +1330,7 @@
     <script src="js/plugins/toastr/toastr.min.js"></script>
 
 
+
     <script>
         $(document).ready(function() {
             setTimeout(function() {
@@ -1335,7 +1340,7 @@
                     showMethod: 'slideDown',
                     timeOut: 4000
                 };
-                toastr.success('Responsive Admin Theme', 'Welcome to INSPINIA');
+                toastr.success('Fast Invoice Capturing', 'Welcome to drop2books');
 
             }, 1300);
 
@@ -1423,6 +1428,15 @@
 
             var ctx4 = document.getElementById("doughnutChart2").getContext("2d");
             new Chart(ctx4, {type: 'doughnut', data: doughnutData, options:doughnutOptions});
+
+            var currentUser = getCurrentUser();
+            var username = currentUser.get('username');
+            var element = document.getElementById("usernameTitle");
+            element.innerHTML = username;
+
+            element = document.getElementById("welcomeUser");
+            element.innerHTML = "Welcome " + username;
+            
 
         });
     </script>

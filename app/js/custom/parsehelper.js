@@ -9,9 +9,28 @@ $(function() {
 
   Parse.serverURL = 'https://parseapi.back4app.com/';
 
-
+  var currentUser = Parse.User.current();
+  if (currentUser) {
+    // do stuff with the user
+  } else {
+    if ((window.location.href.indexOf("login.html") > -1) ||
+        (window.location.href.indexOf("register.html") > -1))
+    {
+    }
+    else {
+      // show the signup or login page
+      window.location = "login.html";
+    }
+  }
 });
 
+function logout() {
+  Parse.User.logOut().then(() => {
+    //var currentUser = Parse.User.current();  // this will now be null
+    // show the signup or login page
+    window.location = "login.html";
+  });
+};
 
 function register() {
     var self = this;
@@ -35,48 +54,66 @@ function register() {
       },
       error: function(user, error) {
         // Show the error message somewhere and let the user try again.
-        alert("Error: " + error.code + " " + error.message);
+        self.$(".m-t .error").html("Error: " + error.code + " " + error.message).show();
+        
       }
 });
   };
 
 function logIn() {
-    var self = this;
-    var email = this.$("#login-username").val();
-    var password = this.$("#login-password").val();
-    
-    var query = new Parse.Query(Parse.User);
-    query.equalTo("email", email);  // find all the women
-    query.find({
-        success: function(email) {
-          
-            // Do stuff
+  var self = this;
+  var email = this.$("#login-username").val();
+  var password = this.$("#login-password").val();
+  
+  var query = new Parse.Query(Parse.User);
+  query.equalTo("email", email);  // find all the women
+  query.find({
+      success: function(email) {
+        
+          // Do stuff
 
-            var user = email[0];
-            var username = user.get('username');
+          var user = email[0];
+          var username = user.get('username');
 
-            Parse.User.logIn(username, password, {
-                success: function(user) {
-                  
-                    //self.undelegateEvents();
-                    //delete self;
-
-                    window.location = "index.html"; // Redirecting to other page.
-                },
-                error: function(user, error) {
-                    self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
-                    //this.$(".login-form button").removeAttr("disabled");
-                }
+          Parse.User.logIn(username, password, {
+              success: function(user) {
                 
-            });
-        },
-        error: function(user, error) {
-              self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
-              //this.$(".login-form button").removeAttr("disabled");
-        }
-    });
+                  //self.undelegateEvents();
+                  //delete self;
 
-    //this.$(".login-form button").attr("disabled", "disabled");
+                  window.location = "index.html"; // Redirecting to other page.
+              },
+              error: function(user, error) {
+                  self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
+                  //this.$(".login-form button").removeAttr("disabled");
+              }
+              
+          });
+      },
+      error: function(user, error) {
+            self.$(".m-t .error").html("Invalid username or password. Please try again.").show();
+            //this.$(".login-form button").removeAttr("disabled");
+      }
+  });
 
-    return false;
-  };
+  //this.$(".login-form button").attr("disabled", "disabled");
+};
+
+function getCurrentUser() {
+  var currentUser = Parse.User.current();
+  if (currentUser) {
+    // do stuff with the user
+    return currentUser;
+
+  } else {
+      // show the signup or login page
+      window.location = "login.html";
+    }
+};
+
+/// Web storage
+function loadPreferences() {
+  var currentUser = getCurrentUser();
+  
+};
+
