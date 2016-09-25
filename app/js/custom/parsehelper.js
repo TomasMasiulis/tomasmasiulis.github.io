@@ -123,3 +123,37 @@ function loadPreferences() {
   
 };
 
+function showInvoices(){
+  var Expense = Parse.Object.extend("Expense");
+  var query = new Parse.Query(Expense);
+  // query.equalTo("playerName", "Dan Stemkoski");
+  query.find({
+    success: function(results) {
+      //alert("Successfully retrieved " + results.length + " scores.");
+      // Do something with the returned Parse.Object values
+      for (var i = 0; i < results.length; i++) {
+        var object = results[i];
+        //alert(object.id + ' - ' + object.get('objectId'));
+      }
+    },
+    error: function(error) {
+      //alert("Error: " + error.code + " " + error.message);
+    }
+  });
+}
+
+function getTotalInvoices(obj){
+  var Expense = Parse.Object.extend("Expense");
+  var query = new Parse.Query(Expense);
+
+  query.count({
+    success: function(count) {
+      // The count request succeeded. Show the count
+      obj.total = count;
+    },
+    error: function(error) {
+      // The request failed
+      obj.total = "-";
+    }
+  });
+}
