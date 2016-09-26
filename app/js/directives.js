@@ -156,22 +156,50 @@ function dropzone() {
         link: function(scope, element, attrs) {
 
             var config = {
-                url: 'http://localhost:8080/upload',
-                maxFilesize: 100,
+                url: '/#',
+                //maxFilesize: 100,
                 paramName: "uploadfile",
-                maxThumbnailFilesize: 10,
-                parallelUploads: 1,
+                //maxThumbnailFilesize: 10,
+                //parallelUploads: 1,
                 autoProcessQueue: false
             };
 
             var eventHandlers = {
                 'addedfile': function(file) {
                     scope.file = file;
-                    if (this.files[1]!=null) {
-                        this.removeFile(this.files[0]);
-                    }
+                    
                     scope.$apply(function() {
                         scope.fileAdded = true;
+                    });
+
+                    $(file.previewElement).find('.dz-progress').css('display','none');
+
+                    var package = new Parse.Object("Package");
+                    package.set("Description", file.name);
+
+                    var packageACL = new Parse.ACL(Parse.User.current());
+                    packageACL.setPublicReadAccess(true);
+                    package.setACL(packageACL);
+
+                    package.save().then(function() {
+                        var parseFile = new Parse.File(file.name,file);
+                        parseFile.save().then(function() {
+                            // The file has been saved to Parse.
+                            var expense = new Parse.Object("Expense");
+                            expense.set("memo", file.name);
+                            expense.set("image", parseFile);
+                            expense.set("package", package);
+
+                            var expenseACL = new Parse.ACL(Parse.User.current());
+                            expenseACL.setPublicReadAccess(true);
+                            expense.setACL(expenseACL);
+
+                            expense.save();
+
+                        }, 
+                        function(error) {
+                          // The file either could not be read, or could not be saved to Parse.
+                        });
                     });
                 },
 
