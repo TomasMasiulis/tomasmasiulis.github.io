@@ -25,7 +25,15 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
             url: "/main",
             templateUrl: "views/main.html",
             data: { pageTitle: 'Dashboard' },
-            
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            files: ['css/plugins/dropzone/basic.css','css/plugins/dropzone/dropzone.css','js/plugins/dropzone/dropzone.js']
+                        }
+                    ]);
+                }
+            }
         })
         .state('index.minor', {
             url: "/minor",

@@ -150,7 +150,7 @@ function minimalizaSidebar($timeout) {
 /**
  * dropZone - Directive for Drag and drop zone file upload plugin
  */
-function dropZone() {
+function dropzone() {
     return {
         restrict: 'C',
         link: function(scope, element, attrs) {
@@ -208,4 +208,4 @@ angular
     .directive('iboxTools', iboxTools)
     .directive('minimalizaSidebar', minimalizaSidebar)
     .directive('iboxToolsFullScreen', iboxToolsFullScreen)
-    .directive('dropZone',dropZone);
+    .directive('dropzone',dropzone);

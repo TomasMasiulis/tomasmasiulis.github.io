@@ -25,11 +25,11 @@ $(function() {
 });
 
 function logout() {
-  Parse.User.logOut().then(() => {
+  Parse.User.logOut();//.then(function(){
     //var currentUser = Parse.User.current();  // this will now be null
     // show the signup or login page
     window.location = "login.html";
-  });
+  //});
 };
 
 function register() {
