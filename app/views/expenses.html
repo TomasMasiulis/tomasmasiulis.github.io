@@ -1,0 +1,92 @@
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Expenses</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+            <li class="active">
+                <strong>Expenses</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>For Approval</h5>
+
+                    <div ibox-tools> </div>
+                </div>
+                <div class="ibox-content">
+                    <input type="text" class="form-control input-sm m-b-xs" id="filter"
+                           placeholder="Search in table">
+                    <div class="expenses">
+                    <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
+                        <thead>
+                            <tr>
+                                <!-- <th><input icheck type="checkbox" ng-model="checkAll"></th> -->
+                                <th>Supplier</th>
+                                <th class="pull-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng:repeat="e in expensesToApprove track by $index"
+                                ng-init="eIndex=$index" ng-click="rowHighilited(eIndex, e)"
+                                ng-class="eIndex==selectedRow?'selected':''">
+                                <!-- <td>
+                                    <input icheck type="checkbox" ng-model="check1"></td>-->
+                                <td> 
+                                    <small class="pull-right text-muted">{{e.get('ExpenseDate').toLocaleDateString();}}</small>
+                                    
+                                    <strong>{{e.get('SupplierName')}}</strong>
+                                    <div class="small m-t-xs">
+                                        <p>{{e.get('uploadedByTitle');}}</p>
+                                    </div>
+                                </td>
+                                <td><strong class="pull-right">
+                                {{toMoney(e.get('Total'))}}</script>
+                                </strong></td>
+
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <ul class="pagination pull-left"></ul>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <div class="col-lg-9">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Document</h5>
+
+                    <div ibox-tools> </div>
+                </div>
+                <div class="ibox-content">
+                    <!-- a block container is required -->
+                    <div >
+                      <viewerjs></viewerjs>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

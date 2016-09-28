@@ -123,7 +123,7 @@ function loadPreferences() {
   
 };
 
-function showInvoices(){
+function getExpensesToApprove(obj){
   var Expense = Parse.Object.extend("Expense");
   var query = new Parse.Query(Expense);
   // query.equalTo("playerName", "Dan Stemkoski");
@@ -131,10 +131,19 @@ function showInvoices(){
     success: function(results) {
       //alert("Successfully retrieved " + results.length + " scores.");
       // Do something with the returned Parse.Object values
+      obj.expensesToApprove = results;
+
+      /*
       for (var i = 0; i < results.length; i++) {
         var object = results[i];
         //alert(object.id + ' - ' + object.get('objectId'));
+        var memo = object.get('Memo');
+        obj.expensesToApprove.push(memo);
+        
+
       }
+      */
+      
     },
     error: function(error) {
       //alert("Error: " + error.code + " " + error.message);

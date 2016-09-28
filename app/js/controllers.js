@@ -6,7 +6,8 @@
 /**
  * MainCtrl - controller
  */
-function MainCtrl() {
+
+function MainCtrl($scope) {
 
     //this.userName = 'Example user';
     this.helloText = 'Welcome in drop2books';
@@ -15,7 +16,24 @@ function MainCtrl() {
     var currentUser = getCurrentUser();
     this.userName = currentUser.get('username');
 
+    var expenses = ["1", "2"];
     this.total = getTotalInvoices(this);
+
+    $scope.expensesToApprove = [];
+    getExpensesToApprove($scope);
+    
+    $scope.toMoney = function(number){
+        var money = accounting.formatMoney(number);
+        return money;
+    }
+
+    $scope.go = function(expense) {
+        alert(expense.get('SupplierName'));
+    }
+
+    $scope.rowHighilited = function(row, expense){
+        $scope.selectedRow = row; 
+    }
 };
 
 

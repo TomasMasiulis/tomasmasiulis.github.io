@@ -150,6 +150,34 @@ function minimalizaSidebar($timeout) {
 /**
  * dropZone - Directive for Drag and drop zone file upload plugin
  */
+function updateProgress(file, progress){
+    var node, _i, _len, _ref, _results;
+    _ref = file.previewElement.querySelectorAll("[data-dz-uploadprogress]");
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        node = _ref[_i];
+        if (node.nodeName === 'PROGRESS') {
+            _results.push(node.value = progress);
+        } else {
+            _results.push(node.style.width = "" + progress + "%");
+        }
+    }
+ }
+
+function viewerjs() {
+    return {
+        template: '<img id="image" src="http://housedivided.dickinson.edu/sites/files/2010/08/type_example.jpg" alt="Picture">',
+        link: function(scope, element, attrs) {
+            // View one image
+            scope.loadViewer = function () {
+                new Viewer(element[0].firstChild);
+            };
+
+            scope.loadViewer();
+        }
+    }
+}
+
 function dropzone() {
     return {
         restrict: 'C',
@@ -172,7 +200,7 @@ function dropzone() {
                         scope.fileAdded = true;
                     });
 
-                    $(file.previewElement).find('.dz-progress').css('display','none');
+                    updateProgress(file, 0);
 
                     var package = new Parse.Object("Package");
                     package.set("Description", file.name);
@@ -182,19 +210,25 @@ function dropzone() {
                     package.setACL(packageACL);
 
                     package.save().then(function() {
+                        updateProgress(file, 10);
                         var parseFile = new Parse.File(file.name,file);
                         parseFile.save().then(function() {
+                            updateProgress(file, 80);
                             // The file has been saved to Parse.
                             var expense = new Parse.Object("Expense");
-                            expense.set("memo", file.name);
+                            expense.set("Memo", file.name);
                             expense.set("image", parseFile);
-                            expense.set("package", package);
+                            expense.set("Package", package);
 
                             var expenseACL = new Parse.ACL(Parse.User.current());
                             expenseACL.setPublicReadAccess(true);
                             expense.setACL(expenseACL);
 
-                            expense.save();
+                            expense.save().then(function(){
+                                updateProgress(file, 100);
+                                $(file.previewElement).find('.dz-progress').css('display','none');
+                                file.previewElement.classList.add("dz-success");
+                            });
 
                         }, 
                         function(error) {
@@ -202,7 +236,9 @@ function dropzone() {
                         });
                     });
                 },
-
+                'totaluploadprogress': function(progress){
+                    console.log(progress);
+                },
                 'success': function (file, response) {
                 }
 
@@ -226,11 +262,50 @@ function dropzone() {
 }
 
 /**
+ * icheck - Directive for custom checkbox icheck
+ */
+function icheck($timeout) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function($scope, element, $attrs, ngModel) {
+            return $timeout(function() {
+                var value;
+                value = $attrs['value'];
+
+                $scope.$watch($attrs['ngModel'], function(newValue){
+                    $(element).iCheck('update');
+                })
+
+                return $(element).iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green'
+
+                }).on('ifChanged', function(event) {
+                        if ($(element).attr('type') === 'checkbox' && $attrs['ngModel']) {
+                            $scope.$apply(function() {
+                                return ngModel.$setViewValue(event.target.checked);
+                            });
+                        }
+                        if ($(element).attr('type') === 'radio' && $attrs['ngModel']) {
+                            return $scope.$apply(function() {
+                                return ngModel.$setViewValue(value);
+                            });
+                        }
+                    });
+            });
+        }
+    };
+}
+
+/**
  *
  * Pass all functions into module
  */
 angular
     .module('drop2books')
+    .directive('icheck', icheck)
+    .directive('viewerjs', viewerjs)
     .directive('pageTitle', pageTitle)
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)

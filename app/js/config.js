@@ -35,10 +35,38 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                 }
             }
         })
-        .state('index.minor', {
-            url: "/minor",
-            templateUrl: "views/minor.html",
-            data: { pageTitle: 'Example view' }
+        .state('index.expenses', {
+            url: "/expenses",
+            templateUrl: "views/expenses.html",
+            data: { pageTitle: 'Expenses' },
+            resolve: {
+                loadPlugin: function ($ocLazyLoad) {
+                    return $ocLazyLoad.load([
+                        {
+                            files: ['js/plugins/footable/footable.all.min.js', 
+                                    'css/plugins/footable/footable.core.css']
+                        },
+                        {
+                            name: 'ui.footable',
+                            files: ['js/plugins/footable/angular-footable.js']
+                        },
+                        {
+                            files: ['js/plugins/accounting/accounting.min.js']
+                        },
+                        {
+                            files: ['css/drop2books/drop2books.css']
+                        },
+                        {
+                            files: ['js/plugins/iCheck/icheck.min.js', 
+                                    'css/plugins/iCheck/custom.css']
+                        },
+                        {
+                            files: ['js/plugins/viewerjs/viewer.min.js', 
+                                    'css/plugins/viewerjs/viewer.min.css']
+                        }
+                    ]);
+                }
+            }
         })
 }
 angular
