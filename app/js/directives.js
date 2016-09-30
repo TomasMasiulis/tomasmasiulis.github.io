@@ -166,18 +166,38 @@ function updateProgress(file, progress){
 
 function viewerjs() {
     return {
-        template: '<img id="image" src="http://housedivided.dickinson.edu/sites/files/2010/08/type_example.jpg" alt="Picture">',
+        template: '<img class="img-responsive" ng-src="{{expense.imageUrl}}" alt="{{expense.imageName}}">',
         link: function(scope, element, attrs) {
             // View one image
-            scope.loadViewer = function () {
-                new Viewer(element[0].firstChild);
-            };
+            // scope.loadViewer = function () {
+            //     //new Viewer(element[0].firstChild);
+            // };
 
-            scope.loadViewer();
+            // scope.loadViewer();
         }
     }
 }
 
+function myDateTimePicker(){
+    return {
+        template:'<div class="input-group date"><input type="date-time" class="form-control" date-time ng-change="changeInvoiceNo("ExpenseDate")" ng-model="ExpenseDate" min-view="date" max-view="year" view="year" auto-close="true"><span class="input-group-addon"><i class="fa fa-calendar"></i></span></div>',
+        link: function(scope, element, attrs) {
+
+            // angular.element(document).ready(function (element) {
+            //     var aaa = $('#data_2 .input-group.date');
+            //     aaa.datepicker({
+            //         startView: 1,
+            //         todayBtn: "linked",
+            //         keyboardNavigation: false,
+            //         forceParse: false,
+            //         autoclose: true,
+            //         format: "dd/mm/yyyy"
+            //     });
+            // });
+            
+        }
+    }
+}
 function dropzone() {
     return {
         restrict: 'C',
@@ -298,6 +318,19 @@ function icheck($timeout) {
     };
 }
 
+
+function footablePostRepeatDirective($timeout) {
+    
+    return function(scope, element, attrs) {
+        if (scope.$last){
+              // iteration is complete, do whatever post-processing
+              // is necessary
+              //element.parent().css('border', '1px solid black');
+              $('.footable').trigger('footable_redraw'); //force a redraw
+        };
+    }
+}
+
 /**
  *
  * Pass all functions into module
@@ -311,4 +344,6 @@ angular
     .directive('iboxTools', iboxTools)
     .directive('minimalizaSidebar', minimalizaSidebar)
     .directive('iboxToolsFullScreen', iboxToolsFullScreen)
-    .directive('dropzone',dropzone);
+    .directive('dropzone',dropzone)
+    .directive('footablePostRepeatDirective', footablePostRepeatDirective)
+    .directive('myDateTimePicker', myDateTimePicker);

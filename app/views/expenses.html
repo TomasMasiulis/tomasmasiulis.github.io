@@ -1,8 +1,8 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Expenses</h2>
+    <div class="col-lg-12">
+       <!--  <h2>Expenses</h2> -->
         <ol class="breadcrumb">
             <li>
                 <a href="index.html">Home</a>
@@ -11,9 +11,6 @@
                 <strong>Expenses</strong>
             </li>
         </ol>
-    </div>
-    <div class="col-lg-2">
-
     </div>
 </div>
 
@@ -25,28 +22,27 @@
                 <div class="ibox-title">
                     <h5>For Approval</h5>
 
-                    <div ibox-tools> </div>
+                    <!-- <div ibox-tools> </div> -->
                 </div>
                 <div class="ibox-content">
                     <input type="text" class="form-control input-sm m-b-xs" id="filter"
                            placeholder="Search in table">
-                    <div class="expenses">
                     <table class="footable table table-stripped" data-page-size="8" data-filter=#filter>
                         <thead>
                             <tr>
                                 <!-- <th><input icheck type="checkbox" ng-model="checkAll"></th> -->
-                                <th>Supplier</th>
+                                <th>Expense</th>
                                 <th class="pull-right">Total</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng:repeat="e in expensesToApprove track by $index"
                                 ng-init="eIndex=$index" ng-click="rowHighilited(eIndex, e)"
-                                ng-class="eIndex==selectedRow?'selected':''">
+                                ng-class="eIndex==selectedRow?'selected':''" footable-post-repeat-directive>
                                 <!-- <td>
                                     <input icheck type="checkbox" ng-model="check1"></td>-->
                                 <td> 
-                                    <small class="pull-right text-muted">{{e.get('ExpenseDate').toLocaleDateString();}}</small>
+                                    <small class="pull-right text-muted">{{e.get('InvoiceDate').toLocaleDateString();}}</small>
                                     
                                     <strong>{{e.get('SupplierName')}}</strong>
                                     <div class="small m-t-xs">
@@ -68,7 +64,6 @@
                         </tr>
                         </tfoot>
                     </table>
-                    </div>
                 </div>
             </div>
         </div>
@@ -78,13 +73,87 @@
                 <div class="ibox-title">
                     <h5>Document</h5>
 
-                    <div ibox-tools> </div>
+                    <!-- <div ibox-tools> </div> -->
                 </div>
+
+
                 <div class="ibox-content">
-                    <!-- a block container is required -->
-                    <div >
-                      <viewerjs></viewerjs>
+                <div class="row">
+                    <div class="col-md-3">
+                        <!-- a block container is required -->
+                         <form method="get" class="form-horizontal">
+
+                            <div class="form-group"><label class="col-sm-12 control-label" style="text-align: left;">Account</label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12"><input type="text" class="form-control" ng-change="changeInvoiceData('SupplierName')" ng-model="expense.Account"></div>
+                            </div>
+
+                            <div class="form-group"><label class="col-sm-12 control-label" style="text-align: left;">Invoice No</label></div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12"><input type="text" class="form-control" ng-change="changeInvoiceData('InvoiceNo')" ng-model="expense.InvoiceNo"></div>
+                            </div>
+
+                            <div class="form-group" id="data_2">
+                                <label class="col-sm-12 control-label" style="text-align: left;">Invoice Date</label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group date"> 
+                                        <input type="date-time" class="form-control" date-time ng-model="expense.InvoiceDate" min-view="date" max-view="year" view="date" auto-close="true">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                <!-- <my-date-time-picker></my-date-time-picker> -->
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_2">
+                                <label class="col-sm-12 control-label" style="text-align: left;">Due Date</label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <div class="input-group date"> 
+                                        <input type="date-time" class="form-control" date-time ng-model="expense.DueDate" min-view="date" max-view="year" view="date" auto-close="true">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                <!-- <my-date-time-picker></my-date-time-picker> -->
+                                </div>
+                            </div>
+
+                            <div class="form-group"><label class="col-sm-12 control-label" style="text-align: left;">Supplier</label>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12"><input type="text" class="form-control" ng-change="changeInvoiceData('SupplierName')" ng-model="expense.SupplierName"></div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group"><label class="col-sm-3 control-label">Amount</label>
+                                <div class="col-sm-9"><input type="number" class="form-control" ng-change="changeInvoiceData('Amount')" ng-model="expense.Amount"></div>
+                            </div>
+
+                            <div class="form-group"><label class="col-sm-3 control-label">Tax</label>
+                                <div class="col-sm-9"><input type="number" class="form-control" ng-change="changeInvoiceData('Tax')" ng-model="expense.Tax"></div>
+                            </div>
+
+                            <div class="form-group"><label class="col-sm-3 control-label">Total</label>
+                                <div class="col-sm-9"><input type="number" class="form-control" ng-change="changeInvoiceData('Total')" ng-model="expense.Total" ng-disabled="true"></div>
+                            </div>
+
+                        </form>
                     </div>
+                    <div class="col-md-9">
+                        <!-- a block container is required -->
+                        <div >
+                          <viewerjs></viewerjs>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

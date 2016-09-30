@@ -63,7 +63,14 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
                         {
                             files: ['js/plugins/viewerjs/viewer.min.js', 
                                     'css/plugins/viewerjs/viewer.min.css']
+                        },
+                        {
+                            name: 'datePicker',
+                            files: ['css/plugins/datapicker/angular-datapicker.css','js/plugins/datapicker/angular-datepicker.js']
                         }
+                        /*{
+                            files: ['css/plugins/datapicker/datepicker3.css']
+                        }*/
                     ]);
                 }
             }
