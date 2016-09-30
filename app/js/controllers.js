@@ -10,7 +10,7 @@
 function MainCtrl($scope) {
 
     //this.userName = 'Example user';
-    this.helloText = 'Welcome in drop2books';
+    this.helloText = 'Welcome to drop2books';
     this.descriptionText = 'It is an application that collect all your expenses, recognizes them and sends to your accountant';
 
     var currentUser = getCurrentUser();
