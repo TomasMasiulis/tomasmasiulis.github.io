@@ -166,7 +166,7 @@ function updateProgress(file, progress){
 
 function viewerjs() {
     return {
-        template: '<img class="img-responsive" ng-src="{{expense.imageUrl}}" alt="{{expense.imageName}}">',
+        template: '<img class="img-responsive" style="border: 3px solid #f3f3f4;" ng-src="{{expense.imageUrl}}" alt="{{expense.imageName}}">',
         link: function(scope, element, attrs) {
             // View one image
             // scope.loadViewer = function () {
