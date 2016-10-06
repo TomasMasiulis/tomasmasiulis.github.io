@@ -41,12 +41,12 @@
                                 ng-class="eIndex==selectedRow?'selected':''" footable-post-repeat-directive>
                                 <!-- <td>
                                     <input icheck type="checkbox" ng-model="check1"></td>-->
-                                <td data-value="{{e.get('SupplierName')}}"> 
+                                <td data-value="{{e.get('AccountTitle')}}"> 
                                     <small class="pull-right text-muted">{{e.get('InvoiceDate').toLocaleDateString();}}</small>
                                     
-                                    <strong>{{e.get('SupplierName')}}</strong>
+                                    <strong>{{e.get('AccountTitle')}}</strong>
                                     <div class="small m-t-xs">
-                                        <p>{{e.get('AccountTitle');}}</p>
+                                        <p>{{e.get('SupplierName');}}</p>
                                     </div>
                                 </td>
                                 <td data-value="{{e.get('Total')}}"><strong class="pull-right">
