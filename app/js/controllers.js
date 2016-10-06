@@ -43,7 +43,8 @@ function MainCtrl($scope) {
         ExpenseDate: null,
         InvoiceNo: '',
         SupplierName: '',
-        Total: ''
+        Total: '',
+        AccountTitle: ''
     };
     
 
@@ -62,6 +63,7 @@ function MainCtrl($scope) {
         $scope.expense.Amount = expense.get('Amount');
         $scope.expense.Tax = expense.get('Tax');
         $scope.expense.Total = expense.get('Total');
+        $scope.expense.AccountTitle = expense.get('AccountTitle');
 
         var invoiceDate = expense.get('InvoiceDate')
         $scope.expense.InvoiceDate = (typeof invoiceDate === "undefined") ? null : invoiceDate;
@@ -92,6 +94,10 @@ function MainCtrl($scope) {
         else if (dataChanged == 'SupplierName')
         {
             $scope.expense.parseExpense.set('SupplierName',$scope.expense.SupplierName);
+        }
+        else if (dataChanged == 'AccountTitle')
+        {
+            $scope.expense.parseExpense.set('AccountTitle',$scope.expense.AccountTitle);
         }
         else if (dataChanged == 'Amount')
         {
