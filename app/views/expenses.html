@@ -61,7 +61,7 @@
                                      
                                     <i class="fa fa-circle" ng-class="(e.Account!=null)&&(e.Account!='')?'text-navy':'text-warning'"></i>
 
-                                    <small class="pull-right text-muted">{{toMoment(e.InvoiceDate)}}</small>
+                                    <small class="pull-right text-muted">{{toMoment(e.InvoiceDate, 'L')}}</small>
                                     
                                     <strong>{{e.Account}}</strong>
                                     <div class="small m-t-xs">
