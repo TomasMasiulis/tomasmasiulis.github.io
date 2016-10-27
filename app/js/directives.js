@@ -198,6 +198,7 @@ function myDateTimePicker(){
         }
     }
 }
+
 function dropzone() {
     return {
         restrict: 'C',
@@ -214,6 +215,70 @@ function dropzone() {
 
             var eventHandlers = {
                 'addedfile': function(file) {
+                    scope.file = file;
+
+                    scope.$apply(function() {
+                        scope.fileAdded = true;
+                    });
+
+                    updateProgress(file, 0);
+
+                    // Create a root reference
+                    var storageRef = firebase.storage().ref();
+
+                    // Create a reference to 'images/mountains.jpg'
+                    var randomstring = (+new Date * Math.random()).toString(36).substring(0,6);
+
+                    var expensesImagesRef = storageRef.child('images/' + randomstring + '/' + file.name);
+
+                    var uploadTask = expensesImagesRef.put(file);
+
+                    // Register three observers:
+                    // 1. 'state_changed' observer, called any time the state changes
+                    // 2. Error observer, called on failure
+                    // 3. Completion observer, called on successful completion
+                    uploadTask.on('state_changed', function(snapshot){
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        updateProgress(file, progress);
+                        switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused');
+                                break;
+                            case firebase.storage.TaskState.RUNNING: // or 'running'
+                                console.log('Upload is running');
+                            break;
+                        }
+
+                    }, function(error) {
+                        // Handle unsuccessful uploads
+                    }, function() {
+                        // Handle successful uploads on complete
+                        // For instance, get the download URL: https://firebasestorage.googleapis.com/... 
+                    
+                        console.log('Uploaded a blob or file!');
+
+                        scope.expensesToApprove.$add({
+                            InvoiceDate: firebase.database.ServerValue.TIMESTAMP,
+                            SupplierName: "",
+                            
+                            uploadedByTitle: "Tomas Masiulis",
+                            timestamp: firebase.database.ServerValue.TIMESTAMP,
+                            imageUrl : uploadTask.snapshot.downloadURL,
+                            imagePath : uploadTask.snapshot.metadata.fullPath,
+                            //imageRef : uploadTask.snapshot.ref,
+                            memo : file.name,
+                            Status : "dropped",
+                            Substatus: ""
+                        });
+
+                        $(file.previewElement).find('.dz-progress').css('display','none');
+                        file.previewElement.classList.add("dz-success");
+                    });   
+                },
+                /*'addedfile': function(file) {
                     scope.file = file;
                     
                     scope.$apply(function() {
@@ -255,7 +320,7 @@ function dropzone() {
                           // The file either could not be read, or could not be saved to Parse.
                         });
                     });
-                },
+                },*/
                 'totaluploadprogress': function(progress){
                     console.log(progress);
                 },

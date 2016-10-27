@@ -25,8 +25,17 @@
             <li ui-sref-active="active">
                 <a ui-sref="index.main"><i class="fa fa-laptop"></i> <span class="nav-label">Dashboard</span> </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="index.expenses"><i class="fa fa-desktop"></i> <span class="nav-label">Expenses</span></a>
+            <li ng-class="{active: $state.includes('expenses')}">
+                <a href=""><i class="fa fa-edit"></i> 
+                <span class="nav-label">Expenses</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('expenses')}">
+                    
+                    <li ui-sref-active="active"><a ui-sref="expenses.dropped">Dropped <span class="label label-warning pull-right">{{total}}</span></a>
+
+                    </li>
+                    <li ui-sref-active="active"><a ui-sref="expenses.recognized">In Process</a></li>
+                    <li ui-sref-active="active"><a ui-sref="expenses.recognized">Synchronization</a></li>
+                </ul>
             </li>
         </ul>
 

@@ -38,6 +38,7 @@ function register() {
     var username = this.$("#register-username").val();
     var email = this.$("#register-email").val();
     var password = this.$("#register-password").val();
+    var companyName = this.$("#register-companyName").val();
 
     var user = new Parse.User();
     user.set("username", username);
@@ -49,7 +50,20 @@ function register() {
 
     user.signUp(null, {
       success: function(user) {
+
         // Hooray! Let them use the app now.
+        var Role = Parse.Object.extend("Role");
+        var query = new Parse.Query(Role);
+        query.equalTo("name", user.id);
+        query.find({
+          success: function(role) {
+            role.name = companyName;
+            role.save();
+          },
+          error: function(user, error) {
+          }
+        });
+
         window.location = "index.html"; // Redirecting to other page.
       },
       error: function(user, error) {
@@ -57,8 +71,8 @@ function register() {
         self.$(".m-t .error").html("Error: " + error.code + " " + error.message).show();
         
       }
-});
-  };
+  });
+};
 
 function logIn() {
   var self = this;
